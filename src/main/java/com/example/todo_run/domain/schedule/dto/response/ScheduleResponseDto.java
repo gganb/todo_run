@@ -16,7 +16,7 @@ public class ScheduleResponseDto {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public ScheduleResponseDto(Long id, Long writerId, String title, String contents, int commentCount, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private ScheduleResponseDto(Long id, Long writerId, String title, String contents, int commentCount, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.writerId = writerId;
         this.title = title;
@@ -26,13 +26,13 @@ public class ScheduleResponseDto {
         this.updatedAt = updatedAt;
     }
 
-    public static ScheduleResponseDto from(Schedule schedule) {
+    public static ScheduleResponseDto from(Schedule schedule, int commentCount) {
         return new ScheduleResponseDto(
                 schedule.getId(),
                 schedule.getWriterId(),
                 schedule.getTitle(),
                 schedule.getContents(),
-                schedule.getCommentList().size(),   // 댓글 없으면 0 으로 나오나?
+                commentCount,
                 schedule.getCreatedAt(),
                 schedule.getUpdatedAt()
         );
