@@ -1,6 +1,7 @@
 package com.example.todo_run.domain.schedule.dto.response;
 
-import com.example.todo_run.domain.comment.entity.Comment;
+import com.example.todo_run.domain.comment.dto.response.CommentResponseDto;
+import com.example.todo_run.domain.schedule.entity.Schedule;
 import lombok.Getter;
 
 import java.util.List;
@@ -8,7 +9,32 @@ import java.util.List;
 @Getter
 public class ScheduleCommentListResponseDto {
     // 일정 Id
-    private Long scheduleId;
-    // 댓글 리스트 ........................
-    private List<Comment> commentList;
+    private final Long scheduleId;
+
+    private final String title;
+
+    private final String contents;
+    // 댓글 리스트
+    private final List<CommentResponseDto> commentList;
+
+    private ScheduleCommentListResponseDto(
+            Long scheduleId,
+            String title,
+            String contents,
+            List<CommentResponseDto> commentList) {
+
+        this.scheduleId = scheduleId;
+        this.title = title;
+        this.contents = contents;
+        this.commentList = commentList;
+    }
+
+    public static ScheduleCommentListResponseDto from(Schedule schedule, List<CommentResponseDto> commentList) {
+        return new ScheduleCommentListResponseDto(
+                schedule.getId(),
+                schedule.getTitle(),
+                schedule.getContents(),
+                commentList);
+
+    }
 }
