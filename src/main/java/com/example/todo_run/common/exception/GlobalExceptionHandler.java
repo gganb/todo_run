@@ -16,14 +16,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ExceptionResponse> handleValidException(MethodArgumentNotValidException e) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        String code = "VALIDATION_FAILED";
+
         String message = e.getBindingResult().getFieldError().getDefaultMessage();
 
-        return ResponseEntity.status(status.value())
-                .body(ExceptionResponse.builder()
-                        .status(status.value())
-                        .code(code)
+        return ResponseEntity.badRequest().body(
+                ExceptionResponse.builder()
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .code("VALIDATION_FAILED")
                         .message(message)
                         .build());
     }
