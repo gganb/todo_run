@@ -2,12 +2,12 @@ package com.example.todo_run.domain.schedule.repository;
 
 import com.example.todo_run.domain.schedule.entity.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
-    List<Schedule> findAllByWriterIdOrderByCreatedAtDesc(Long writerId);
 
-    Optional<Schedule> findScheduleByWriterId(Long writerId);
+    @Query("SELECT s FROM Schedule s LEFT JOIN FETCH s.commentList WHERE s.writerId = :writerId ORDER BY s.createdAt DESC")
+    List<Schedule> findAllByWriterIdOrderByCreatedAtDesc(Long writerId);
 }
