@@ -82,7 +82,8 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.delete(findComment);
     }
 
-    private Comment findCommentOrElseThrow(Long commentId) {
+    @Override
+    public Comment findCommentOrElseThrow(Long commentId) {
         return commentRepository.findById(commentId).orElseThrow(
                 () -> new CommentException(COMMENT_NOT_FOUND)
         );
