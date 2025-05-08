@@ -62,7 +62,7 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
 │  │  └─ exception
 │  │     ├─ CommentError
 │  │     └─ CommentException
-│  ├─ inComment
+│  ├─ reply
 │  │  ├─ controller
 │  │  ├─ service
 │  │  ├─ repository
@@ -136,7 +136,7 @@ create table comments
     foreign key (schedule_id) references schedules (id)
 );
 
-create table in_comments
+create table replies
 (
     id                BIGINT AUTO_INCREMENT primary key,
     schedule_id       BIGINT       NOT NULL, /* 일정 id */
