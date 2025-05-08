@@ -10,12 +10,13 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
 
 ## 목차
 
-1.[프로젝트 구조](#-프로젝트-구조)
-2.[API 테스트](#-API-테스트)
-  -[성공 테스트 - 일정](#-성공-테스트-일정)
-  -[실패 테스트 - 일정](#-실패-테스트-일정)
-  -[성콩 테스트 - 댓글](#-성공-테스트-댓글)
-  -[실패 테스트 - 댓글](#-실패-테스트-댓글)
+1. [프로젝트 구조](#프로젝트-구조)
+2. [API 테스트](#api-테스트)
+   - [성공 테스트 - 일정](#성공-테스트---일정)
+   - [실패 테스트 - 일정](#실패-테스트---일정)
+   - [성공 테스트 - 댓글](#성공-테스트---댓글)
+   - [실패 테스트 - 댓글](#실패-테스트---댓글)
+
   
 ## 프로젝트 구조
 
@@ -91,6 +92,23 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
 └─ TodoRunApplication
 
 ````
+## API 명세서
+
+- ### 일정 API
+
+  | 기능       | Method | URL                           | Path / Param                 | RequestBody                                                        | ResponseBody                                                                                                                                                                                                                                       | Error                                |
+| -------- | ------ | ----------------------------- | ---------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| 일정 생성    | POST   | `/api/schedules`              | 없음                           | `{ "writerId": 1, "title": "일정 제목", "contents": "일정 내용" }`         | `{ "message": "일정이 생성되었습니다.", "data": { "id": 1, "writerId": 1, "title": "일정 제목", "contents": "일정 내용", "createdAt": "...", "updatedAt": "..." } }`                                                                                                 | `400 Bad Request`                    |
+| 전체 일정 조회 | GET    | `/api/schedules`              | `writerId=1` (Param)         | 없음                                                                 | `{ "message": "일정을 작성자 기준으로 조회합니다.", "data": [ { "id": 1, "writerId": 1, "title": "일정 제목", "commentCount": 3, "contents": "내용", "createdAt": "...", "updatedAt": "..." } ] }`                                                                      | `404 NOT FOUND`                      |
+| 단건 일정 조회 | GET    | `/api/schedules/{scheduleId}` | `scheduleId = 2`             | 없음                                                                 | `{ "message": "일정을 단건 조회합니다.", "data": { "scheduleId": 9, "scheduleWriterId": 2, "title": "제목", "contents": "123", "commentsList": [ { "id": 33, "writerId": 4, "scheduleId": 9, "contents": "댓글", "createdAt": "...", "updatedAt": "..." } ] } }` | `404 NOT FOUND`                      |
+| 일정 수정    | PUT    | `/api/schedules/{scheduleId}` | `scheduleId = 2`             | `{ "scheduleWriterId": 1, "title": "제목 수정", "contents": "내용 수정" }` | `{ "message": "일정이 수정되었습니다.", "data": { "id": 1, "title": "제목 수정", "contents": "내용 수정", "createdAt": "...", "updatedAt": "..." } }`                                                                                                                | `400 Bad Request`<br>`404 NOT FOUND` |
+| 일정 삭제    | DELETE | `/api/schedules/{scheduleId}` | `writerId=1`, `scheduleId=2` | 없음                                                                 | `{ "message": "일정이 삭제되었습니다." }`                                                                                                                                                                                                                    | `404 NOT FOUND`                      |
+
+
+
+
+
+
 ## API 테스트 
 
 ### 성공 테스트  - 일정
