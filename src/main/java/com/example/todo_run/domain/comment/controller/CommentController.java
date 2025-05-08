@@ -9,7 +9,6 @@ import com.example.todo_run.domain.comment.dto.response.SaveCommentResponseDto;
 import com.example.todo_run.domain.comment.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +17,17 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-@Slf4j
 public class CommentController {
     private final CommentService commentService;
 
-    // 댓글 저장
-    @PostMapping("/{scheduleId}/comments")
+    /**
+     * 댓글 저장 API
+     * 해당 일정의 댓글을 생성합니다.
+     * <p>
+     * 엔드포인트 예시:
+     * POST /api/schedules/1/comments
+     */
+    @PostMapping("/schedules/{scheduleId}/comments")
     public ResponseEntity<ApiResponse<SaveCommentResponseDto>> saveComment(
             @PathVariable Long scheduleId,
             @Valid @RequestBody SaveCommentRequestDto requestDto
@@ -32,28 +36,43 @@ public class CommentController {
         return ResponseEntity.status(201).body(ApiResponse.of("댓글이 저장되었습니다.", responseDto));
     }
 
-    // 일정에 달린 모든 댓글 조회
-    @GetMapping("/comments")
+    /**
+     * 댓글 전체 조회 API
+     * 해당 일정에 달린 모든 댓글을 조회합니다.
+     * <p>
+     * 엔드포인트 예시:
+     * GET /api/schedules/1/comments
+     */
+    @GetMapping("/schedules/{scheduleId}/comments")
     public ResponseEntity<ApiResponse<List<CommentResponseDto>>> findAllComment(
-            @RequestParam Long scheduleId
+            @PathVariable Long scheduleId
     ) {
         List<CommentResponseDto> commentList = commentService.findAllComment(scheduleId);
         return ResponseEntity.ok().body(ApiResponse.of(scheduleId + "번 일정의 모든 댓글을 조회합니다.", commentList));
     }
 
-    // 일정 단건 조회
+    /**
+     * 댓글 단건 조회 API
+     * <p>
+     * 엔드포인트 예시:
+     * GET /api/comments/1
+     */
     @GetMapping("/comments/{commentId}")
     public ResponseEntity<ApiResponse<CommentResponseDto>> findComment(
             @PathVariable Long commentId
     ) {
-        log.info("댓글 단건 조회");
         CommentResponseDto responseDto = commentService.findComment(commentId);
         return ResponseEntity.ok().body(ApiResponse.of("해당 댓글이 조회되었습니다.", responseDto));
 
     }
 
-
-    // 댓글 수정 - 댓글 작성자만 수정 가능
+    /**
+     * 댓글 수정 API
+     * 댓글 작성자만 수정이 가능합니다.
+     * <p>
+     * 엔드포인트 예시:
+     * PUT /api/comments/1
+     */
     @PutMapping("/comments/{commentId}")
     public ResponseEntity<ApiResponse<CommentResponseDto>> updateComment(
             @PathVariable Long commentId,
@@ -63,7 +82,13 @@ public class CommentController {
         return ResponseEntity.ok().body(ApiResponse.of("댓글이 수정되었습니다.", responseDto));
     }
 
-    // 댓글 삭제 - 댓글 작성자만 삭제 가능
+    /**
+     * 댓글 삭제 API
+     * 댓글 작성자만 삭제가 가능합니다.
+     * <p>
+     * 엔드포인트 예시:
+     * DELETE /api/comments/1
+     */
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<MessageResponse> deleteComment(
             @PathVariable Long commentId,
