@@ -60,7 +60,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public ScheduleCommentListResponseDto findSchedule(Long scheduleId) {
         Schedule findSchedule = scheduleReadService.findByIdOrElseThrow(scheduleId);
 
-        List<CommentResponseDto> commentList = commentService.findAllComment(scheduleId);
+        List<CommentResponseDto> commentList = commentService.findAllCommentOrderByCreatedAtAsc(scheduleId);
 
         return ScheduleCommentListResponseDto.from(findSchedule, commentList);
     }

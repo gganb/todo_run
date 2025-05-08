@@ -20,4 +20,6 @@ public interface CommentService {
     void deleteComment(Long commentId, Long writerId);
 
     int countByScheduleId(Long scheduleId);
+
+    List<CommentResponseDto> findAllCommentOrderByCreatedAtAsc(Long scheduleId);
 }

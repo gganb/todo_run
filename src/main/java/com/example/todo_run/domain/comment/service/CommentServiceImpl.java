@@ -93,4 +93,11 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.countByScheduleId(scheduleId);
     }
 
+    @Override
+    public List<CommentResponseDto> findAllCommentOrderByCreatedAtAsc(Long scheduleId) {
+        List<Comment> commentList = commentRepository.findByScheduleIdOrderByCreatedAtAsc(scheduleId);
+
+        return commentList.stream().map(CommentResponseDto::from).toList();
+    }
+
 }
