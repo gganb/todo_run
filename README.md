@@ -83,7 +83,7 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
 └─ TodoRunApplication
 
 ````
-## 성공 테스트
+## 성공 테스트  - 일정
 
 <details><summary>일정 생성
 </summary>
@@ -114,15 +114,81 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
 
 <details><summary>일정 삭제
 </summary>
-  
-  ![Image](https://github.com/user-attachments/assets/20e51a15-1d7c-4afa-9c59-ade6088594e3)
+
+ ![Image](https://github.com/user-attachments/assets/3210a6e7-957f-4c72-b91a-b05b60b59a90)
 </details>
 
-##실패 테스트
+## 실패 테스트 - 일정
 
 <details><summary>일정 생성
 </summary>
   
+  ![Image](https://github.com/user-attachments/assets/20e51a15-1d7c-4afa-9c59-ade6088594e3)
 </details>
 
+<details><summary>일정 전체 조회
+</summary>
+  
+  ![Image](https://github.com/user-attachments/assets/7f37db25-f790-4c08-a8f4-38e71ad004a1)
+</details>
+
+<details><summary>일정 단건 조회
+</summary>
+  
+ ![Image](https://github.com/user-attachments/assets/4b07ea69-bd69-4723-a6f4-30ae0fa55b22)
+</details>
+
+<details><summary>일정 수정
+</summary>
+  
+  ![Image](https://github.com/user-attachments/assets/9e7f48b4-cfc5-4e8f-aacc-883b5c4f82af)
+  ![Image](https://github.com/user-attachments/assets/806b0e61-e538-454b-913a-5ea4fa7f9ed1)
+</details>
+
+
+## 성공 테스트  - 댓글
+<details><summary>댓글 생성
+</summary>
+  
+  ![Image](https://github.com/user-attachments/assets/af9d8e69-3373-4d1e-bbbb-20a423869eaa)
+</details>
+
+<details><summary>댓글 전체 조회
+</summary>
+
+  ![Image](https://github.com/user-attachments/assets/f6443587-0696-4a47-af22-1d1f7cdaea8d)
+</details>
+
+<details><summary>댓글 단건 조회
+</summary>
+  
+  ![Image](https://github.com/user-attachments/assets/79205eb1-3bb7-4dc8-8bb9-6a61396099cc) 
+</details>
+
+<details><summary>댓글 수정
+</summary>
+
+  ![Image](https://github.com/user-attachments/assets/1fb8a62e-2447-4646-979e-27593d49b311)
+</details>
+
+<details><summary>댓글 삭제
+</summary>
+
+  ![Image](https://github.com/user-attachments/assets/66cde389-1409-478a-944e-55973edf54d4)
+</details>
+
+
+
+## 실패 테스트 - 댓글
+<details><summary>댓글 생성
+</summary>
+  
+![Image](https://github.com/user-attachments/assets/72434c6d-a54a-4ab8-9450-359511bb040c)
+</details>
+
+<details><summary>댓글 삭제
+</summary>
+
+ ![Image](https://github.com/user-attachments/assets/da863c5a-05bb-4679-9925-d25ef9044199)
+</details>
 
