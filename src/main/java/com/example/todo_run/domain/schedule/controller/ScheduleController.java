@@ -52,7 +52,7 @@ public class ScheduleController {
      */
     @GetMapping
     public ResponseEntity<ApiResponse<List<ScheduleResponseDto>>> findAllSchedule(
-            @NotNull @RequestParam Long writerId
+            @RequestParam Long writerId
     ) {
         List<ScheduleResponseDto> scheduleList = scheduleService.findAllSchedule(writerId);
         return ResponseEntity.ok().body(ApiResponse.of("일정을 작성자 기준으로 조회합니다.", scheduleList));
@@ -67,7 +67,7 @@ public class ScheduleController {
      */
     @GetMapping("/{scheduleId}")
     public ResponseEntity<ApiResponse<ScheduleCommentListResponseDto>> findSchedule(
-            @NotNull @PathVariable Long scheduleId
+            @PathVariable Long scheduleId
     ) {
         ScheduleCommentListResponseDto responseDto = scheduleService.findSchedule(scheduleId);
         return ResponseEntity.ok().body(ApiResponse.of("일정을 단건 조회합니다.", responseDto));
@@ -78,15 +78,14 @@ public class ScheduleController {
      * 작성자가 본인의 일정을 수정합니다.
      * <p>
      * 엔드포인트 예시:
-     * PUT /api/schedules/1/2
+     * PUT /api/schedules/2
      */
-    @PutMapping("/{writerId}/{scheduleId}")
+    @PutMapping("/{scheduleId}")
     public ResponseEntity<ApiResponse<UpdateScheduleResponseDto>> updateSchedule(
-            @NotNull @PathVariable Long writerId,
-            @NotNull @PathVariable Long scheduleId,
+            @PathVariable Long scheduleId,
             @Valid @RequestBody UpdateScheduleRequestDto requestDto
     ) {
-        UpdateScheduleResponseDto responseDto = scheduleService.updateSchedule(writerId, scheduleId, requestDto);
+        UpdateScheduleResponseDto responseDto = scheduleService.updateSchedule(scheduleId, requestDto);
         return ResponseEntity.ok().body(ApiResponse.of("일정이 수정되었습니다.", responseDto));
     }
 
@@ -99,8 +98,8 @@ public class ScheduleController {
      */
     @DeleteMapping("/{writerId}/{scheduleId}")
     public ResponseEntity<MessageResponse> deleteSchedule(
-            @NotNull @PathVariable Long writerId,
-            @NotNull @PathVariable Long scheduleId
+            @PathVariable Long writerId,
+            @PathVariable Long scheduleId
     ) {
         scheduleService.deleteSchedule(writerId, scheduleId);
         return ResponseEntity.ok().body(MessageResponse.from("일정이 삭제되었습니다."));

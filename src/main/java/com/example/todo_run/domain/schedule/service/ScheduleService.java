@@ -16,7 +16,7 @@ public interface ScheduleService {
 
     ScheduleCommentListResponseDto findSchedule(Long scheduleId);
 
-    UpdateScheduleResponseDto updateSchedule(Long writerId, Long scheduleId, UpdateScheduleRequestDto requestDto);
+    UpdateScheduleResponseDto updateSchedule(Long scheduleId, UpdateScheduleRequestDto requestDto);
 
     void deleteSchedule(Long writerId, Long scheduleId);
 
