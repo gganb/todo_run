@@ -8,7 +8,15 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 
+## 목차
 
+1.[프로젝트 구조](#-프로젝트-구조)
+2.[API 테스트](#-API-테스트)
+  -[성공 테스트 - 일정](#-성공-테스트-일정)
+  -[실패 테스트 - 일정](#-실패-테스트-일정)
+  -[성콩 테스트 - 댓글](#-성공-테스트-댓글)
+  -[실패 테스트 - 댓글](#-실패-테스트-댓글)
+  
 ## 프로젝트 구조
 
 ````
@@ -83,7 +91,9 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
 └─ TodoRunApplication
 
 ````
-## 성공 테스트  - 일정
+## API 테스트 
+
+### 성공 테스트  - 일정
 
 <details><summary>일정 생성
 </summary>
@@ -118,7 +128,7 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
  ![Image](https://github.com/user-attachments/assets/3210a6e7-957f-4c72-b91a-b05b60b59a90)
 </details>
 
-## 실패 테스트 - 일정
+### 실패 테스트 - 일정
 
 <details><summary>일정 생성
 </summary>
@@ -146,7 +156,7 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
 </details>
 
 
-## 성공 테스트  - 댓글
+### 성공 테스트  - 댓글
 <details><summary>댓글 생성
 </summary>
   
@@ -179,7 +189,7 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
 
 
 
-## 실패 테스트 - 댓글
+### 실패 테스트 - 댓글
 <details><summary>댓글 생성
 </summary>
   
