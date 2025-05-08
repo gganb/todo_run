@@ -14,7 +14,7 @@ public class UpdateScheduleResponseDto {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public UpdateScheduleResponseDto(Long id, Long writerId, String title, String contents, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private UpdateScheduleResponseDto(Long id, Long writerId, String title, String contents, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.writerId = writerId;
         this.title = title;
