@@ -68,10 +68,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     // 일정 수정
     @Override
     @Transactional
-    public UpdateScheduleResponseDto updateSchedule(Long writerId, Long scheduleId, UpdateScheduleRequestDto requestDto) {
+    public UpdateScheduleResponseDto updateSchedule(Long scheduleId, UpdateScheduleRequestDto requestDto) {
         Schedule findSchedule = scheduleReadService.findByIdOrElseThrow(scheduleId);
 
-        if (!findSchedule.getWriterId().equals(writerId)) {
+        if (!findSchedule.getWriterId().equals(requestDto.getScheduleWriterId())) {
             throw new ScheduleException(SCHEDULE_MODIFY_NOT_ALLOWED);
         }
         if (requestDto.getTitle() == null && requestDto.getContents() == null) {
