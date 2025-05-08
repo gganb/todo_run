@@ -1,8 +1,11 @@
 package com.example.todo_run.domain.schedule.service;
 
+import com.example.todo_run.domain.comment.dto.response.CommentResponseDto;
+import com.example.todo_run.domain.comment.service.CommentService;
 import com.example.todo_run.domain.schedule.dto.request.SaveScheduleRequestDto;
 import com.example.todo_run.domain.schedule.dto.request.UpdateScheduleRequestDto;
 import com.example.todo_run.domain.schedule.dto.response.SaveScheduleResponseDto;
+import com.example.todo_run.domain.schedule.dto.response.ScheduleCommentListResponseDto;
 import com.example.todo_run.domain.schedule.dto.response.ScheduleResponseDto;
 import com.example.todo_run.domain.schedule.dto.response.UpdateScheduleResponseDto;
 import com.example.todo_run.domain.schedule.entity.Schedule;
@@ -21,9 +24,10 @@ import static com.example.todo_run.domain.schedule.exception.ScheduleError.*;
 public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final ScheduleReadService scheduleReadService;
+    private final CommentService commentService;
 
     // 일정 생성
-    // 일정이 생기고 댓글이 달릴 수 있음..
     @Override
     @Transactional
     public SaveScheduleResponseDto saveSchedule(SaveScheduleRequestDto requestDto) {
@@ -43,30 +47,42 @@ public class ScheduleServiceImpl implements ScheduleService {
         if (scheduleList.isEmpty()) {
             throw new ScheduleException(SCHEDULE_NOT_FOUND);
         }
-
-        return scheduleList.stream().map(ScheduleResponseDto::from).toList();
+        return scheduleList.stream().map(
+                schedule -> ScheduleResponseDto.from(
+                        schedule,
+                        commentService.countByScheduleId(schedule.getId())
+                )).toList();
     }
 
     // 일정 단건 조회
     @Override
     @Transactional(readOnly = true)
-    public ScheduleResponseDto findSchedule(Long scheduleId) {
-        Schedule findSchedule = findByIdOrElseThrow(scheduleId);
+    public ScheduleCommentListResponseDto findSchedule(Long scheduleId) {
+        Schedule findSchedule = scheduleReadService.findByIdOrElseThrow(scheduleId);
 
-        return ScheduleResponseDto.from(findSchedule);
+        List<CommentResponseDto> commentList = commentService.findAllComment(scheduleId);
+
+        return ScheduleCommentListResponseDto.from(findSchedule, commentList);
     }
 
     // 일정 수정
     @Override
     @Transactional
     public UpdateScheduleResponseDto updateSchedule(Long writerId, Long scheduleId, UpdateScheduleRequestDto requestDto) {
-        Schedule findSchedule = findByIdOrElseThrow(scheduleId);
+        Schedule findSchedule = scheduleReadService.findByIdOrElseThrow(scheduleId);
 
         if (!findSchedule.getWriterId().equals(writerId)) {
             throw new ScheduleException(SCHEDULE_MODIFY_NOT_ALLOWED);
         }
-
-        findSchedule.updateSchedule(requestDto);
+        if (requestDto.getTitle() == null && requestDto.getContents() == null) {
+            throw new ScheduleException(SCHEDULE_UPDATE_NO_FIELDS);
+        }
+        if (requestDto.getTitle() != null) {
+            findSchedule.updateTitle(requestDto.getTitle());
+        }
+        if (requestDto.getContents() != null) {
+            findSchedule.updateContents(requestDto.getContents());
+        }
 
         return UpdateScheduleResponseDto.from(findSchedule);
     }
@@ -75,7 +91,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional
     public void deleteSchedule(Long writerId, Long scheduleId) {
-        Schedule findSchedule = findByIdOrElseThrow(scheduleId);
+        Schedule findSchedule = scheduleReadService.findByIdOrElseThrow(scheduleId);
 
         if (!findSchedule.getWriterId().equals(writerId)) {
             throw new ScheduleException(SCHEDULE_DELETE_NOT_ALLOWED);
@@ -83,11 +99,4 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleRepository.delete(findSchedule);
     }
 
-    @Override
-    public Schedule findByIdOrElseThrow(Long scheduleId) {
-
-        return scheduleRepository.findById(scheduleId).orElseThrow(
-                () -> new ScheduleException(SCHEDULE_NOT_FOUND)
-        );
-    }
 }
