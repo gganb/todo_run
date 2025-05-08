@@ -11,6 +11,8 @@ public class ScheduleCommentListResponseDto {
     // 일정 Id
     private final Long scheduleId;
 
+    private final Long scheduleWriterId;
+
     private final String title;
 
     private final String contents;
@@ -19,11 +21,13 @@ public class ScheduleCommentListResponseDto {
 
     private ScheduleCommentListResponseDto(
             Long scheduleId,
+            Long scheduleWriterId,
             String title,
             String contents,
             List<CommentResponseDto> commentList) {
 
         this.scheduleId = scheduleId;
+        this.scheduleWriterId = scheduleWriterId;
         this.title = title;
         this.contents = contents;
         this.commentList = commentList;
@@ -32,6 +36,7 @@ public class ScheduleCommentListResponseDto {
     public static ScheduleCommentListResponseDto from(Schedule schedule, List<CommentResponseDto> commentList) {
         return new ScheduleCommentListResponseDto(
                 schedule.getId(),
+                schedule.getWriterId(),
                 schedule.getTitle(),
                 schedule.getContents(),
                 commentList);
