@@ -2,11 +2,12 @@ package com.example.todo_run.domain.comment.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UpdateCommentRequestDto {
 
     @NotNull(message = "댓글 작성자 id를 입력해주세요.")
