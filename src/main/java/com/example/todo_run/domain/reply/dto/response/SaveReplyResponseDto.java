@@ -1,6 +1,6 @@
-package com.example.todo_run.domain.inComment.dto.response;
+package com.example.todo_run.domain.reply.dto.response;
 
-import com.example.todo_run.domain.inComment.entity.Reply;
+import com.example.todo_run.domain.reply.entity.Reply;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ public class SaveReplyResponseDto {
     public static SaveReplyResponseDto from(Reply reply) {
         return new SaveReplyResponseDto(
                 reply.getWriterId(),
-                reply.getComment().getId(),
+                reply.getParentComment().getId(),
                 reply.getContents(),
                 reply.getCreatedAt()
         );
