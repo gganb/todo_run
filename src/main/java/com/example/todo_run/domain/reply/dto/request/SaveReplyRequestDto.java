@@ -1,4 +1,4 @@
-package com.example.todo_run.domain.inComment.dto.request;
+package com.example.todo_run.domain.reply.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
