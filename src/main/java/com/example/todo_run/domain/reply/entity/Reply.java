@@ -1,4 +1,4 @@
-package com.example.todo_run.domain.inComment.entity;
+package com.example.todo_run.domain.reply.entity;
 
 import com.example.todo_run.common.entity.BaseEntity;
 import com.example.todo_run.domain.comment.entity.Comment;
@@ -22,19 +22,24 @@ public class Reply extends BaseEntity {
 
     private Long writerId;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_comment_id")
-    private Comment comment;
+    private Comment parentComment;
 
     private String contents;
 
-    // 댓글 아래에 대댓글.        ,,,,,,,'
-    // 댓글 조회시 대댓글도 같이 보여야함. 삭제시 함께 삭제됨.
-    //
-    public Reply(Long scheduleId, Long writerId, Comment comment, String contents) {
+    private Reply(Long scheduleId, Long writerId, Comment parentComment, String contents) {
         this.scheduleId = scheduleId;
         this.writerId = writerId;
-        this.comment = comment;
+        this.parentComment = parentComment;
+        this.contents = contents;
+    }
+
+    public static Reply toEntity(Long writerId, Comment parentComment, String contents) {
+        return new Reply(parentComment.getSchedule().getId(), writerId, parentComment, contents);
+    }
+
+    public void updateReply(String contents) {
         this.contents = contents;
     }
 }
