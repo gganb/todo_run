@@ -25,7 +25,7 @@ public class ReplyController {
     @PostMapping("/{commentId}/replies")
     public ResponseEntity<ApiResponse<SaveReplyResponseDto>> saveReply(
             @PathVariable Long commentId,
-            @RequestBody SaveReplyRequestDto requestDto
+            @Valid @RequestBody SaveReplyRequestDto requestDto
     ) {
         SaveReplyResponseDto responseDto = replyService.saveReply(commentId, requestDto);
         return ResponseEntity.status(201).body(ApiResponse.of("대댓글이 작성되었습니다.", responseDto));
