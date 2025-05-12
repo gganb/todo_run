@@ -18,22 +18,22 @@
 
 ## 목차
 
-1. [프로젝트 구조](#프로젝트-구조)
-2. [ERD](#erd)
-3. [SQL](#sql)
-4. [API 명세서](#api-명세서)
+1. [프로젝트 구조](#-프로젝트-구조)
+2. [ERD](#-erd)
+3. [SQL](#-sql)
+4. [API 명세서](#-api-명세서)
    - [Schedule API](#schedule-api)
    - [Error Response - Schedule](#error-response---schedule)
    - [Comment API](#comment-api)
    - [Error Response - Comment](#error-response---comment)
-   - [REPLY API](#reply---api)
-5. [API 테스트](#api-테스트)
-   - [성공 테스트 - 일정](#성공-테스트---일정)
-   - [실패 테스트 - 일정](#실패-테스트---일정)
-   - [성공 테스트 - 댓글](#성공-테스트---댓글)
-   - [실패 테스트 - 댓글](#실패-테스트---댓글)
-   - [성공 테스트 - 대댓글](#성공-테스트---대댓글)
-   - [실패 테스트 - 대댓글](#실패-테스트---대댓글)
+   - [REPLY API](#reply-api)
+5. [API TEST](#api-test)
+   - [성공 테스트 - 일정](#-성공-테스트---일정)
+   - [실패 테스트 - 일정](#-실패-테스트---일정)
+   - [성공 테스트 - 댓글](#-성공-테스트---댓글)
+   - [실패 테스트 - 댓글](#-실패-테스트---댓글)
+   - [성공 테스트 - 대댓글](#-성공-테스트---대댓글)
+   - [실패 테스트 - 대댓글](#-실패-테스트---대댓글)
 
   
 ## 📁 프로젝트 구조
@@ -112,7 +112,7 @@
 ````
 <br>
 
-## 🧩ERD
+## 🧩 ERD
 
 <details><summary>ERD
 </summary>
@@ -228,7 +228,7 @@ create table replies
 
 <br>
 
-## API 테스트 
+## API TEST 
 
 ### 🟢 성공 테스트  - 일정
 
