@@ -1,12 +1,20 @@
-# 일정 관리 프로젝트
+# 🗓️ 일정 관리 프로젝트
 
-Spring Boot를 이용한 일정관리 프로젝트 입니다.
+**Spring Boot 기반 웹 애플리케이션**입니다.  
+사용자는 일정(Schedule)을 등록하고, 댓글(Comment) 및 대댓글(Reply)을 통해 사용자들과 소통할 수 있습니다.
 
-## Badges
+### Badges
 
 ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+
+### 🧑‍💻 기술 스택
+
+- Java 17
+- Spring Boot 3.4.5
+- Spring Data JPA
+- MySQL
 
 ## 목차
 
@@ -18,14 +26,17 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
    - [Error Response - Schedule](#error-response---schedule)
    - [Comment API](#comment-api)
    - [Error Response - Comment](#error-response---comment)
+   - [REPLY API](#reply---api)
 5. [API 테스트](#api-테스트)
    - [성공 테스트 - 일정](#성공-테스트---일정)
    - [실패 테스트 - 일정](#실패-테스트---일정)
    - [성공 테스트 - 댓글](#성공-테스트---댓글)
    - [실패 테스트 - 댓글](#실패-테스트---댓글)
+   - [성공 테스트 - 대댓글](#성공-테스트---대댓글)
+   - [실패 테스트 - 대댓글](#실패-테스트---대댓글)
 
   
-## 프로젝트 구조
+## 📁 프로젝트 구조
 
 ````
 
@@ -101,7 +112,7 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
 ````
 <br>
 
-## ERD
+## 🧩ERD
 
 <details><summary>ERD
 </summary>
@@ -111,7 +122,7 @@ Spring Boot를 이용한 일정관리 프로젝트 입니다.
 
 <br>
 
-## SQL
+## 💾 SQL
 
 > todo_run.sql
 
@@ -145,7 +156,6 @@ create table replies
     content           VARCHAR(255) NOT NULL,
     created_at        TIMESTAMP,
     updated_at        TIMESTAMP,
-    foreign key (schedule_id) references schedules (id),
     foreign key (parent_comment_id) references comments (id)
 
 );
@@ -154,7 +164,7 @@ create table replies
 
 <br>
 
-## API 명세서
+## 📄 API 명세서
 
 - ### Schedule API
 
@@ -203,9 +213,24 @@ create table replies
 | 댓글 삭제            | CONTENTS_DELETE_NOT_ALLOWED     | C03          | 400 Bad Request   | {<br>  "status": 400,<br>  "code": "C03",<br>  "message": "본인이 작성한 댓글만 삭제할 수 있습니다!" <br>} |
 
 
+<br>
+
+- ### REPLY API
+
+| 기능         | Method | URL                            | Path Variable / Param          | Request Body                                                                 | Response Body                                                                                                                                                                               | Error                                   |
+|--------------|--------|--------------------------------|----------------------------------|------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|
+| 댓글 저장     | POST   | `/api/{commentId}/replies`     | `commentId = 10`                | `{ "writerId": 1, "contents": "내용2" }`                                     | `{ "message": "대댓글이 작성되었습니다.", "data": { "writerId": 1, "commentId": 10, "contents": "내용2", "createdAt": "2025-05-09T10:52:48.854" } }`                                        | `404 NOT FOUND`, `400 Bad Request`      |
+| 대댓글 조회   | GET    | `/api/{commentId}/replies`     | `commentId = 10`                | 없음                                                                         | `{ "message": "댓글을 조회합니다.", "data": { "commentId": 10, "writerId": 1, "contents": "댓글1", "createdAt": "2025-05-09T11:03:08", "updatedAt": "2025-05-09T11:03:08", "replies": [ { "id": 1, "writerId": 1, "contents": "내용2", "createdAt": "2025-05-12T09:05:17", "updatedAt": "2025-05-12T09:05:17" } ] } }` | `404 NOT FOUND`                          |
+| 대댓글 수정   | PUT    | `/api/replies/{replyId}`       | `replyId = 1`                   | `{ "writerId": 2, "contents": "수정2" }`                                     | `{ "message": "댓글이 수정되었습니다.", "data": { "writerId": 1, "commentId": 10, "contents": "대댓글 수정", "createdAt": "2025-05-12T09:05:17", "updatedAt": "2025-05-12T09:05:17" } }`     | `404 NOT FOUND`                          |
+| 대댓글 삭제   | DELETE | `/api/replies/{replyId}`       | `replyId = 1`, `writerId = 1`   | 없음 또는 QueryParam으로 `writerId=1` 포함                                   | `{ "message": "댓글이 삭제되었습니다." }`                                                                                                            | `400 Bad Request`, `404 NOT FOUND`      |
+
+
+
+<br>
+
 ## API 테스트 
 
-### 성공 테스트  - 일정
+### 🟢 성공 테스트  - 일정
 
 <details><summary>일정 생성
 </summary>
@@ -240,7 +265,7 @@ create table replies
  ![Image](https://github.com/user-attachments/assets/3210a6e7-957f-4c72-b91a-b05b60b59a90)
 </details>
 
-### 실패 테스트 - 일정
+### 🔴 실패 테스트 - 일정
 
 <details><summary>일정 생성
 </summary>
@@ -268,7 +293,7 @@ create table replies
 </details>
 
 
-### 성공 테스트  - 댓글
+### 🟢 성공 테스트  - 댓글
 <details><summary>댓글 생성
 </summary>
   
@@ -301,7 +326,7 @@ create table replies
 
 
 
-### 실패 테스트 - 댓글
+### 🔴 실패 테스트 - 댓글
 <details><summary>댓글 생성
 </summary>
   
@@ -314,3 +339,42 @@ create table replies
  ![Image](https://github.com/user-attachments/assets/da863c5a-05bb-4679-9925-d25ef9044199)
 </details>
 
+### 🟢 성공 테스트 - 대댓글
+<details><summary>대댓글 생성
+</summary>
+
+![Image](https://github.com/user-attachments/assets/98408f2e-0049-4f5c-b243-3c463e3d685b)
+</details>
+
+<details><summary>대댓글 전체 조회
+</summary>
+
+![Image](https://github.com/user-attachments/assets/033624bd-6e35-4612-89af-4d4b2a4ba2c8)
+
+</details>
+
+<details><summary>대댓글 수정
+</summary>
+
+![Image](https://github.com/user-attachments/assets/583e2686-2e71-4c18-89ad-451a53582f28)
+
+</details>
+
+<details><summary>대댓글 삭제
+</summary>
+
+![Image](https://github.com/user-attachments/assets/16dc1e7c-8090-4ccc-bf6c-b411a3c28a21)
+</details>
+
+### 🔴 실패 테스트 - 대댓글
+<details><summary>대댓글 조회 실패
+</summary>
+
+![Image](https://github.com/user-attachments/assets/acfa1f97-e96c-4482-abc8-6546cad7359b)
+</details>
+
+<details><summary>대댓글 수정 실패
+</summary>
+
+![Image](https://github.com/user-attachments/assets/d52e66dc-6d43-4744-85d1-c41f1cd8cbbb)
+</details>
